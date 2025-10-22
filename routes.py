@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from app import app, db, bcrypt
+from app import db, bcrypt
+from flask import current_app as app
 from models import User, Food, Order
 
 

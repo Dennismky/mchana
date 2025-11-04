@@ -1,13 +1,20 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Index from "./components/Index";
 
-export default function App() {
+function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Header />
-      <Routes>
-        <Route path="/" element={<h1>Home Page</h1>} />
-      </Routes>
-    </BrowserRouter>
+      <main className="min-h-screen pt-24">
+        <Routes>
+          <Route path="/" element={<Index />} />
+        </Routes>
+      </main>
+      <Footer />
+    </Router>
   );
 }
+
+export default App;

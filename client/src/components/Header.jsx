@@ -31,15 +31,21 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full flex items-center justify-between px-6 md:px-8 py-3 transition-all duration-300 z-50 ${
-        scrolled ? "bg-white/90 dark:bg-gray-900/90 shadow-lg backdrop-blur-md" : "bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm"
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-8 py-3 transition-all duration-300
+        ${darkMode ? "bg-foreground" : "bg-background"}
+        ${scrolled ? "shadow-elegant" : ""}
+      `}
     >
-      <Link to="/" className="flex flex-col items-center space-y-1 hover:opacity-80 transition">
-        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-red-500 to-yellow-400 flex items-center justify-center shadow-lg">
-          <span className="text-2xl font-bold text-white">M</span>
+      <Link
+        to="/"
+        className="flex flex-col items-center space-y-1 hover:opacity-80 transition"
+      >
+        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-elegant">
+          <span className="text-2xl font-bold text-primary-foreground">M</span>
         </div>
-        <h2 className="text-lg font-bold tracking-wide dark:text-white">Mchana</h2>
+        <h2 className="text-lg font-bold tracking-wide text-foreground dark:text-primary-foreground">
+          Mchana
+        </h2>
       </Link>
 
       <nav className="hidden md:flex space-x-8 text-base font-medium">
@@ -47,10 +53,10 @@ export default function Header() {
           <Link
             key={link.path}
             to={link.path}
-            className={`hover:text-red-500 dark:hover:text-yellow-400 transition-colors ${
+            className={`hover:text-primary dark:hover:text-accent transition-colors ${
               isActive(link.path)
-                ? "text-red-600 dark:text-yellow-300 font-semibold"
-                : "text-gray-800 dark:text-gray-200"
+                ? "text-primary dark:text-accent font-semibold"
+                : "text-foreground dark:text-muted-foreground"
             }`}
           >
             {link.name}
@@ -59,38 +65,42 @@ export default function Header() {
       </nav>
 
       <div className="flex items-center space-x-4">
-        <button className="px-4 py-2 border border-gray-700 dark:border-gray-300 text-black dark:text-white rounded hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition hidden sm:inline-flex">
+        <button className="px-4 py-2 border rounded text-foreground dark:text-primary-foreground border-border dark:border-muted-foreground hover:bg-muted dark:hover:bg-muted-foreground transition hidden sm:inline-flex">
           Login
         </button>
-        <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition hidden sm:inline-flex">
+        <button className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition hidden sm:inline-flex">
           Sign Up
         </button>
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className="p-2 border rounded-full dark:border-gray-400"
+          className="p-2 border rounded-full border-border dark:border-muted-foreground"
         >
-          {darkMode ? <Sun className="h-5 w-5 text-yellow-400" /> : <Moon className="h-5 w-5 text-gray-800" />}
+          {darkMode ? (
+            <Sun className="h-5 w-5 text-accent" />
+          ) : (
+            <Moon className="h-5 w-5 text-foreground" />
+          )}
         </button>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 border rounded-full dark:border-gray-400"
+          className="md:hidden p-2 border rounded-full border-border dark:border-muted-foreground"
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       {mobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white dark:bg-gray-900 border-t dark:border-gray-700 p-6 md:hidden">
+        <div className="absolute top-full left-0 w-full p-6 md:hidden glass-card animate-fade-in">
           <nav className="flex flex-col space-y-4">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`text-lg font-medium hover:text-red-500 dark:hover:text-yellow-400 ${
+                className={`text-lg font-medium hover:text-primary dark:hover:text-accent ${
                   isActive(link.path)
-                    ? "text-red-600 dark:text-yellow-300"
-                    : "text-gray-800 dark:text-gray-200"
+                    ? "text-primary dark:text-accent"
+                    : "text-foreground dark:text-muted-foreground"
                 }`}
               >
                 {link.name}
